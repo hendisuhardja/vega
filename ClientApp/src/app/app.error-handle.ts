@@ -11,7 +11,7 @@ export class AppErrorHandler implements ErrorHandler
 
     }
     handleError(error: any): void {
-
+        console.log(isDevMode());
         if(!isDevMode())
             Sentry.captureException(error.originalError || error);
         else 

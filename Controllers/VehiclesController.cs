@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -31,11 +32,6 @@ namespace vega.Controllers
 
             var model = await vehicleRepository.GetVehicle(vehicleResource.ModelId, false);
 
-            if (model == null)
-            {
-                ModelState.AddModelError("ModelId", "Invalid Model Id.");
-                return BadRequest(ModelState);
-            }
             var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
             await vehicleRepository.Add(vehicle);
@@ -57,6 +53,11 @@ namespace vega.Controllers
 
             var vehicle = await vehicleRepository.GetVehicle(id);
 
+            if (vehicle == null)
+            {
+                ModelState.AddModelError("ModelId", "Invalid Model Id.");
+                return BadRequest(ModelState);
+            }
             mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource, vehicle);
             vehicle.LastUpdate = DateTime.Now;
             await unitOfWork.CompleteAsync();
@@ -94,6 +95,15 @@ namespace vega.Controllers
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<QueryResultResource<VehicleResource>> GetVehicles(VehicleQueryResource filterResource)
+        {
+            var filter = mapper.Map<VehicleQueryResource, VehicleQuery>(filterResource);
+            var vehicles = await vehicleRepository.GetVehicles(filter);
+
+            return mapper.Map<QueryResult<Vehicle>, QueryResultResource<VehicleResource>>(vehicles);
         }
     }
 }
