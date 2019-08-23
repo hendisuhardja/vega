@@ -23,6 +23,8 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationComponent } from './shared/pagination.component';
 import { VechileViewComponent } from './vechile-view/vechile-view.component';
 
+import 'bootstrap'
+import { PhotoService } from './services/photo.service';
 Sentry.init({
   dsn: "https://b33a8949a9d84f32abcd2f3ee04d3ad9@sentry.io/1528999"
 });
@@ -59,6 +61,7 @@ Sentry.init({
     MakeService,
     FeatureService,
     VehicleService,
+    PhotoService,
     {
       provide:ErrorHandler, useClass :AppErrorHandler
     }

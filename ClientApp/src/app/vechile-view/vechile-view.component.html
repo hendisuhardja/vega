@@ -1,19 +1,30 @@
 <h1>Vehicle</h1>
-<p>
-  {{ vehicle | json}}
-</p>
 <div>
   
+  <script>
+    var PreventDefault = function () {
+
+var linkFn = function (scope, element, attrs) {
+    $(element).on("click", function (event){
+        event.preventDefault();
+    });
+};
+
+return {
+    restrict: 'A',
+    link: linkFn
+}
+};</script>
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Vehicle</a></li>
-    <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a></li>
+    <li role="presentation" class="active nav-item"><a  revent-default  href="#basic" aria-controls="basic" role="tab" data-toggle="tab" class="nav-link">Vehicle</a></li>
+    <li role="presentation" class="nav-item"><a revent-default  href="#photos" aria-controls="photos" role="tab" data-toggle="tab"  class="nav-link">Photos</a></li>
   </ul>
 
 
   <!-- Tab panes -->
   <div class="tab-content" *ngIf="vehicle">
     <!-- Vehicle tab -->
-    <div role="tabpanel" class="tab-pane active" id="basic">
+    <div role="tabpanel" class="tab-pane fade show active" id="basic">
       <h2>Basics</h2>
       <ul>
         <li>Make: {{ this.vehicle.make.name }}</li>
@@ -36,6 +47,11 @@
     <!-- Photos tab -->
     <div role="tabpanel" class="tab-pane" id="photos">
       <h2>Photos</h2>
-     
+       <input type="file" (change)="uploadPhoto()" #fileInput />
+        
+  <div class="row">
+       <img *ngFor="let p of this.photos" src="/uploads/{{ p.fileName}}" class="img-thumbnail img-fluid col-3">
+       </div>
   </div>
+</div>
 </div>
