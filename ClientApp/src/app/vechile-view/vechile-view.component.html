@@ -48,7 +48,11 @@ return {
     <div role="tabpanel" class="tab-pane" id="photos">
       <h2>Photos</h2>
        <input type="file" (change)="uploadPhoto()" #fileInput />
-        
+        <div class="progress" *ngIf="progress && progress.percentage < 100">
+          <div class="progress-bar" [style.width]="progress.percentage + '%'">
+            <span class="sr-only">{{ progress.percentage }} % Completed</span>
+          </div>
+        </div>
   <div class="row">
        <img *ngFor="let p of this.photos" src="/uploads/{{ p.fileName}}" class="img-thumbnail img-fluid col-3">
        </div>
