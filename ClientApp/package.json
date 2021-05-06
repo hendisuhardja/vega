@@ -33,7 +33,7 @@
     "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.5.2",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
